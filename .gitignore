@@ -3,6 +3,7 @@
 build/
 gradle/
 lib/
+log/
 
 *.class
 
