@@ -26,9 +26,10 @@ or, after gradle assemble:
 # Project description
 
 The server implements:
-    * a Stock Exchange simulator (the StockExchange and Processor classes)
-    * a scheduler for several periodic tasks (the ScheduledTasks class)
-    * several web services (StockExchangeService class), as follows:
+
+* a Stock Exchange simulator (the StockExchange and Processor classes)
+* a scheduler for several periodic tasks (the ScheduledTasks class)
+* several web services (StockExchangeService class), as follows:
 
           /listing   : stock exchange listing in JSON format
           /report    : the report (http://localhost:8080/report/)
