@@ -61,7 +61,9 @@ public class StockExchangeTest {
 
         // check volume for ticker
         assertEquals("5000", ticker2.getVolume().toString());
-        assertEquals(5000, ticker2.getVolume().getValueInt());
+
+        BigDecimal value = ticker2.getVolume().getValue();
+        assertEquals(5000, value.intValue());
 
     }
 }

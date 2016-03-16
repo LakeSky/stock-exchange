@@ -3,11 +3,13 @@ package org.stockexchange.entity;
 
 import org.stockexchange.util.Currency;
 
+import java.io.Serializable;
+
 /**
  * StockInfo implementation
  */
 
-public class StockInfo {
+public class StockInfo implements Serializable {
 
     public Currency price;
     public int quantity;

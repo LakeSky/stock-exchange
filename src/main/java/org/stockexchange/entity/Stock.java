@@ -69,11 +69,11 @@ public class Stock implements Serializable {
     }
 
     /**
-     * Calculate dividend Yield
+     * Calculate the dividend Yield
      * @param tickerPrice
      * @return the dividend Yield
      */
-    public double calculateDividendYield(Currency tickerPrice){
+    public Double getDividendYield(Currency tickerPrice){
         if (type==StockType.COMMON)
             return lastDividend.divide(tickerPrice);
         else { // PREFERRED
@@ -83,11 +83,11 @@ public class Stock implements Serializable {
 
 
     /**
-     * Calculate PE Ratio
+     * Calculate the PE Ratio
      * @param tickerPrice
      * @return the PE ratio
      */
-    public double calculatePERatio(Currency tickerPrice){
+    public Double getPERatio(Currency tickerPrice){
         return tickerPrice.divide(lastDividend);
     }
 

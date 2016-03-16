@@ -1,5 +1,7 @@
 package org.stockexchange.util;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -19,15 +21,10 @@ public final class Currency {
         return value;
     }
 
-    public int getValueInt(){
-        return value.intValue();
-    }
-
     public Currency(int value){
         if(value < 0) throw new IllegalArgumentException("Value cannot be lower than zero.");
         this.value = new BigDecimal(value);
     }
-
 
     public Currency(BigDecimal value){
         if(value==null) throw new IllegalArgumentException("Value cannot be null.");
@@ -39,6 +36,7 @@ public final class Currency {
         this.value = null;
     }
 
+    @JsonIgnore
     public boolean isDefined(){
         return this!=UNDEFINED && this.value.compareTo(BigDecimal.ZERO)>0;
     }

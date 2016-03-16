@@ -1,5 +1,6 @@
 package org.stockexchange.response;
 
+import org.stockexchange.entity.Stock;
 import org.stockexchange.entity.StockInfo;
 import org.stockexchange.entity.Ticker;
 
@@ -17,8 +18,13 @@ public class AllStockInfoReport implements Serializable {
 
     private double globalIndex;
 
-    private List<String> symbols = null;
-    private List<StockInfo> stockInfoList = null;
+    private Map<String, Ticker> tickers;
+    //private List<String> symbols = null;
+    //private List<StockInfo> stockInfoList = null;
+
+    public Map<String, Ticker> getTickers() {
+        return tickers;
+    }
 
     public String getStatus() {
         return status;
@@ -40,25 +46,25 @@ public class AllStockInfoReport implements Serializable {
         return globalIndex;
     }
 
-    public List<String> getSymbols() {
-        return symbols;
-    }
+    //public List<String> getSymbols() {
+    //    return symbols;
+    //}
 
     public void setGlobalIndex(double globalIndex) {
         this.globalIndex = globalIndex;
     }
 
-    public void setSymbols(List<String> symbols) {
-        this.symbols = symbols;
-    }
+    //public void setSymbols(List<String> symbols) {
+    //    this.symbols = symbols;
+    //}
 
-    public List<StockInfo> getStockInfoList() {
-        return stockInfoList;
-    }
+    //public List<StockInfo> getStockInfoList() {
+    //    return stockInfoList;
+    //}
 
-    public void setStockInfoList(List<StockInfo> stockInfoList) {
-        this.stockInfoList = stockInfoList;
-    }
+    //public void setStockInfoList(List<StockInfo> stockInfoList) {
+    //    this.stockInfoList = stockInfoList;
+    //}
 
     /**
      * Default constructor
@@ -66,38 +72,30 @@ public class AllStockInfoReport implements Serializable {
     public AllStockInfoReport() {
     }
 
-    public AllStockInfoReport(String status, String message, double globalIndex) {
+    public AllStockInfoReport(String status, String message, double globalIndex, Map<String, Ticker> tickers) {
         this.status = status;
         this.message = message;
         this.globalIndex = globalIndex;
+        this.tickers = tickers;
     }
 
-    public void fillLists (Map<String, Ticker> tickers){
-        stockInfoList = new ArrayList<>();
-        symbols = new ArrayList<>();
+    public String stockInfoListReport(){
+        String ret = "\r\n--------------------------------------------------------------------------------------";
+
+        ret = ret + "\r\nINDEX: " + String.format("%10.4f", globalIndex);
+
+        ret = ret + "\r\n--------------------------------------------------------------------------------------";
+        ret = ret + "\r\nStock                Price    Quantity         Volume(Mil)     Div.yield      PE Ratio";
+        ret = ret + "\r\n--------------------------------------------------------------------------------------";
 
         // iterate map and fill stockInfoList and symbols
         for (Map.Entry<String, Ticker> entry : tickers.entrySet()){
             String symbol = entry.getKey();
             Ticker ticker = (Ticker)entry.getValue();
-            stockInfoList.add(ticker.getStockInfo());
-            symbols.add((ticker.getStock().getSymbol()));
-        }
-    }
-
-    public String stockInfoListReport(){
-        String ret = "\r\n----------------------------------------------------------";
-
-        ret = ret + "\r\nINDEX: " + String.format("%10.4f", globalIndex);
-
-        ret = ret + "\r\n----------------------------------------------------------";
-        ret = ret + "\r\nStock                Price    Quantity         Volume(Mil)";
-        ret = ret + "\r\n----------------------------------------------------------";
-
-        for (int index=0; index<stockInfoList.size(); index++){
-            StockInfo stockInfo = stockInfoList.get(index);
-            String symbol = symbols.get(index);
+            StockInfo stockInfo = ticker.getStockInfo();
             ret = ret + "\r\n" + stockInfo.toReport(symbol);
+            ret = ret + String.format("  %12.4f", ticker.getDividendYield());
+            ret = ret + String.format("  %12.4f", ticker.getPERatio());
         }
 
         return ret;

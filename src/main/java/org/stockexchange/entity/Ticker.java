@@ -2,10 +2,12 @@ package org.stockexchange.entity;
 
 import org.stockexchange.util.Currency;
 
+import java.io.Serializable;
+
 /**
  * Ticker implementation
  */
-public class Ticker {
+public class Ticker implements Serializable {
 
     private Stock stock;
     private StockInfo stockInfo;
@@ -45,6 +47,15 @@ public class Ticker {
     public StockInfo getStockInfo() {
         return stockInfo;
     }
+
+    public Double getDividendYield(){
+        return stock.getDividendYield(getPrice());
+    }
+
+    public Double getPERatio(){
+        return stock.getPERatio(getPrice());
+    }
+
 
     @Override
     public String toString() {

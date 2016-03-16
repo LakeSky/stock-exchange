@@ -207,13 +207,9 @@ public class StockExchange {
     /**
      * Scheduled task for reporting, invoked as configured in Config.reportIntervalMilliseconds
      */
-
     public void doReport() {
-        AllStockInfoReport report = new AllStockInfoReport("Success", "", globalIndex);
-        report.fillLists(getTickers());
+        AllStockInfoReport report = new AllStockInfoReport("Success", "", globalIndex, getTickers());
         String output = report.stockInfoListReport();
-
-        // print the report
         Utils.print(output);
     }
 

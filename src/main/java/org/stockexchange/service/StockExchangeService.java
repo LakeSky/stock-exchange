@@ -53,8 +53,8 @@ public class StockExchangeService {
     @RequestMapping(value = "/report", method = RequestMethod.GET)
     public AllStockInfoReport allStockInfoReport() {
         StockExchange stx = (StockExchange) ctx.getBean("stockExchange");
-        AllStockInfoReport report = new AllStockInfoReport("Success", "", stx.getGlobalIndex());
-        report.fillLists(stx.getTickers());
+        AllStockInfoReport report = new AllStockInfoReport(
+                "Success", "", stx.getGlobalIndex(), stx.getTickers());
         return report;
     }
 
@@ -63,7 +63,6 @@ public class StockExchangeService {
         Returns the ticker information for the given symbol
         @return
     */
-
     @RequestMapping(value = "/watch", method = RequestMethod.GET)
     public WatchResponse watch(
             @RequestParam(value = "symbol", defaultValue = "") String symbol
@@ -86,7 +85,6 @@ public class StockExchangeService {
      * @param price
      * @return
      */
-
     @RequestMapping(value = "/trade", method = RequestMethod.GET)
     public TradeResponse trade(
             @RequestParam(value = "tradeType", defaultValue = "") String tradeTypeStr,
